@@ -4,11 +4,15 @@ import {
   BarChart3,
   Building2,
   CalendarDays,
+  Contact,
   LayoutDashboard,
   LogOut,
   Menu,
   PhoneCall,
+  PhoneIncoming,
+  Tags,
   Users,
+  UsersRound,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 
@@ -21,12 +25,18 @@ import { cn } from "@/lib/utils";
 
 const NAV = [
   { to: "/dashboard", label: "დაფა", icon: LayoutDashboard },
+  { to: "/incoming", label: "ცხელი ხაზი", icon: PhoneIncoming },
   { to: "/calls", label: "გამოძახებები", icon: PhoneCall },
   { to: "/schedule", label: "გრაფიკი", icon: CalendarDays },
+  { to: "/clients", label: "კლიენტები", icon: Contact },
   { to: "/objects", label: "ობიექტები", icon: Building2 },
+  { to: "/tariffs", label: "ტარიფები", icon: Tags },
+  { to: "/teams", label: "პირები/ჯგუფები", icon: UsersRound },
   { to: "/reports", label: "რეპორტები", icon: BarChart3 },
   { to: "/users", label: "მომხმარებლები", icon: Users, managerOnly: true },
 ] as const;
+
+const TECH_ALLOWED = ["/dashboard", "/calls", "/schedule"];
 
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const { isManager, isTechnician } = useCurrentUser();
@@ -36,8 +46,7 @@ function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
     <nav className="flex flex-col gap-0.5 p-2">
       {NAV.filter((i) => {
         if ("managerOnly" in i && i.managerOnly && !isManager) return false;
-        if (isTechnician && (i.to === "/reports" || i.to === "/objects"))
-          return false;
+        if (isTechnician && !TECH_ALLOWED.includes(i.to)) return false;
         return true;
       }).map((item) => {
         const Icon = item.icon;
