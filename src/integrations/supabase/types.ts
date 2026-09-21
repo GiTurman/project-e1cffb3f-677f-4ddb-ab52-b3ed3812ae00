@@ -14,16 +14,294 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      call_notes: {
+        Row: {
+          author_id: string | null
+          author_name: string | null
+          body: string
+          call_id: string
+          created_at: string
+          id: string
+        }
+        Insert: {
+          author_id?: string | null
+          author_name?: string | null
+          body: string
+          call_id: string
+          created_at?: string
+          id?: string
+        }
+        Update: {
+          author_id?: string | null
+          author_name?: string | null
+          body?: string
+          call_id?: string
+          created_at?: string
+          id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_notes_call_id_fkey"
+            columns: ["call_id"]
+            isOneToOne: false
+            referencedRelation: "service_calls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      call_status_history: {
+        Row: {
+          call_id: string
+          changed_at: string
+          changed_by: string | null
+          id: string
+          note: string | null
+          status: Database["public"]["Enums"]["call_status"]
+        }
+        Insert: {
+          call_id: string
+          changed_at?: string
+          changed_by?: string | null
+          id?: string
+          note?: string | null
+          status: Database["public"]["Enums"]["call_status"]
+        }
+        Update: {
+          call_id?: string
+          changed_at?: string
+          changed_by?: string | null
+          id?: string
+          note?: string | null
+          status?: Database["public"]["Enums"]["call_status"]
+        }
+        Relationships: [
+          {
+            foreignKeyName: "call_status_history_call_id_fkey"
+            columns: ["call_id"]
+            isOneToOne: false
+            referencedRelation: "service_calls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      objects: {
+        Row: {
+          address: string
+          client_name: string | null
+          client_phone: string | null
+          created_at: string
+          elevator_code: string
+          id: string
+          last_maintenance_date: string | null
+          maintenance_interval_months: number
+          manufacturer: string | null
+          name: string
+          next_due_date: string | null
+          notes: string | null
+          serial_number: string | null
+          under_contract: boolean
+        }
+        Insert: {
+          address: string
+          client_name?: string | null
+          client_phone?: string | null
+          created_at?: string
+          elevator_code: string
+          id?: string
+          last_maintenance_date?: string | null
+          maintenance_interval_months?: number
+          manufacturer?: string | null
+          name: string
+          next_due_date?: string | null
+          notes?: string | null
+          serial_number?: string | null
+          under_contract?: boolean
+        }
+        Update: {
+          address?: string
+          client_name?: string | null
+          client_phone?: string | null
+          created_at?: string
+          elevator_code?: string
+          id?: string
+          last_maintenance_date?: string | null
+          maintenance_interval_months?: number
+          manufacturer?: string | null
+          name?: string
+          next_due_date?: string | null
+          notes?: string | null
+          serial_number?: string | null
+          under_contract?: boolean
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+          is_active: boolean
+          phone: string | null
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id: string
+          is_active?: boolean
+          phone?: string | null
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          is_active?: boolean
+          phone?: string | null
+        }
+        Relationships: []
+      }
+      service_calls: {
+        Row: {
+          address: string
+          assigned_to: string | null
+          call_no: number
+          client_name: string | null
+          client_phone: string | null
+          closed_at: string | null
+          completed_at: string | null
+          created_at: string
+          created_by: string | null
+          description: string | null
+          elevator_code: string | null
+          id: string
+          object_id: string | null
+          priority: Database["public"]["Enums"]["call_priority"]
+          received_at: string
+          resolution: string | null
+          responded_at: string | null
+          scheduled_at: string | null
+          serial_number: string | null
+          service_type: Database["public"]["Enums"]["service_type"]
+          site_name: string
+          sla_due_at: string | null
+          status: Database["public"]["Enums"]["call_status"]
+          updated_at: string
+        }
+        Insert: {
+          address: string
+          assigned_to?: string | null
+          call_no?: number
+          client_name?: string | null
+          client_phone?: string | null
+          closed_at?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          elevator_code?: string | null
+          id?: string
+          object_id?: string | null
+          priority?: Database["public"]["Enums"]["call_priority"]
+          received_at?: string
+          resolution?: string | null
+          responded_at?: string | null
+          scheduled_at?: string | null
+          serial_number?: string | null
+          service_type: Database["public"]["Enums"]["service_type"]
+          site_name: string
+          sla_due_at?: string | null
+          status?: Database["public"]["Enums"]["call_status"]
+          updated_at?: string
+        }
+        Update: {
+          address?: string
+          assigned_to?: string | null
+          call_no?: number
+          client_name?: string | null
+          client_phone?: string | null
+          closed_at?: string | null
+          completed_at?: string | null
+          created_at?: string
+          created_by?: string | null
+          description?: string | null
+          elevator_code?: string | null
+          id?: string
+          object_id?: string | null
+          priority?: Database["public"]["Enums"]["call_priority"]
+          received_at?: string
+          resolution?: string | null
+          responded_at?: string | null
+          scheduled_at?: string | null
+          serial_number?: string | null
+          service_type?: Database["public"]["Enums"]["service_type"]
+          site_name?: string
+          sla_due_at?: string | null
+          status?: Database["public"]["Enums"]["call_status"]
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "service_calls_assigned_to_fkey"
+            columns: ["assigned_to"]
+            isOneToOne: false
+            referencedRelation: "profiles"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "service_calls_object_id_fkey"
+            columns: ["object_id"]
+            isOneToOne: false
+            referencedRelation: "objects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_staff: { Args: { _user_id: string }; Returns: boolean }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "dispatcher" | "technician" | "manager"
+      call_priority: "kritikuli" | "maghali" | "sashualo" | "dabali"
+      call_status:
+        | "akhali"
+        | "mighebuli"
+        | "gzashi"
+        | "mimdinare"
+        | "shesrulebuli"
+        | "dakhuruli"
+        | "gaukmebuli"
+      service_type: "avaria" | "gegmiuri" | "inspeqcia" | "chamokideba"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +428,19 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["dispatcher", "technician", "manager"],
+      call_priority: ["kritikuli", "maghali", "sashualo", "dabali"],
+      call_status: [
+        "akhali",
+        "mighebuli",
+        "gzashi",
+        "mimdinare",
+        "shesrulebuli",
+        "dakhuruli",
+        "gaukmebuli",
+      ],
+      service_type: ["avaria", "gegmiuri", "inspeqcia", "chamokideba"],
+    },
   },
 } as const
