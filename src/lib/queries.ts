@@ -1,7 +1,7 @@
 import { queryOptions } from "@tanstack/react-query";
 
 import { supabase } from "@/integrations/supabase/client";
-import type { AppRole } from "@/lib/domain";
+import type { AppRole, Profile } from "@/lib/domain";
 
 export const callsQuery = queryOptions({
   queryKey: ["service_calls"],
@@ -44,9 +44,7 @@ export const staffQuery = queryOptions({
   },
 });
 
-export type StaffMember = Awaited<
-  ReturnType<(typeof staffQuery)["queryFn"]>
->[number];
+export type StaffMember = Profile & { roles: AppRole[] };
 
 export const historyQuery = (callId: string) =>
   queryOptions({
